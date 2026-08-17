@@ -1,0 +1,12 @@
+*.pkl 
+VERITABANI_VERTEX/
+*.json
+*.sqlite
+*.sqlite3
+*.db
+sanal_ortam/
+venv/
+.idea/
+__pycache__/
+*.pyc
+yedek.txt
