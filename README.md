@@ -1,123 +1,186 @@
 # AEMOT Vertex Yönetim Paneli
 
-**Yapay Zekâ Destekli Üretim Planlama ve Ürün Ağacı Yönetim Sistemi**
+### Akıllı Üretim Planlama, Veri Tutarlılığı ve Yapay Zekâ Destekli Ürün Ağacı Sistemi
 
-AEMOT Vertex Yönetim Paneli, elektrik motoru üretim süreçlerinde motor ve parça bilgilerinin yönetilmesi, üretim kurallarının uygulanması, sıra numarası tutarsızlıklarının azaltılması ve ürün ağacı (Bill of Materials - BOM) oluşturulması amacıyla geliştirilen Python tabanlı bir masaüstü uygulamasıdır.
+AEMOT Vertex, AEMOT Elektrik Motorları'nın üretim planlama süreçlerinde kullanılan motor ve bileşen bilgilerinin yönetimini kolaylaştırmak, geçmiş Excel kayıtlarındaki tutarsızlıkları gidermek ve ürün ağacı oluşturma süreçlerini otomatikleştirmek amacıyla geliştirdiğim Python tabanlı bir masaüstü uygulamasıdır.
 
-Proje kapsamında modüler bir yönetim paneli, rol tabanlı kullanıcı yetkilendirme sistemi, Excel tabanlı veri yönetimi ve geçmiş üretim verilerinden yararlanarak ürün ağacı tahmini yapan bir makine öğrenmesi modülü geliştirildi.
+Stajım süresince özellikle insan kaynaklı veri hatalarının azaltılması, aynı özelliklere sahip parçaların tutarlı sıra numaralarıyla eşleştirilmesi, ortak ağ üzerindeki Excel dosyalarının güvenilir biçimde yönetilmesi ve makine öğrenmesi destekli ürün ağacı oluşturulması üzerine çalıştım.
 
-Bu proje, 6 Temmuz – 17 Ağustos 2026 tarihleri arasındaki 30 iş günlük stajım kapsamında geliştirildi.
+Proje; modüler masaüstü arayüzü, kural tabanlı veri doğrulama mekanizmaları, kullanıcı yetkilendirme sistemi, gelişmiş arama özellikleri ve Random Forest tabanlı tahmin modülünü tek bir uygulamada bir araya getirir.
 
-## 🚀 Projenin Amacı
+## 🎯 Projenin Amacı
 
-Üretim planlama süreçlerinde manuel veri girişinden kaynaklanan hataları azaltmak, motor ve parça bilgilerinin standartlaştırılmasını sağlamak ve tekrarlanan işlemleri otomatikleştirmek hedeflendi.
+Üretim süreçlerinde kullanılan Excel kayıtlarında zamanla oluşan sıra numarası tutarsızlıklarını, farklı yazım biçimlerinden kaynaklanan eşleştirme hatalarını ve manuel veri girişinden doğan sorunları azaltmak hedeflendi.
 
-Projenin temel hedefleri:
+Bu doğrultuda:
 
-- Motor ve alt parçalar için mühendislik kurallarına uygun kod ve açıklamalar oluşturmak.
-- Aynı özelliklere sahip parçalar için sıra numarası tutarsızlıklarını tespit etmek.
-- Kullanıcı rolleri ve erişim kontrolleriyle sistem yönetimini düzenlemek.
-- Ortak ağ üzerindeki Excel dosyalarıyla veri alışverişini yönetmek.
-- Makine öğrenmesi ile motorlara ait ürün ağaçlarını tahmin etmek.
-- Tekrarlanan veri girişlerini azaltarak üretim planlama sürecini hızlandırmak.
-
-## 🛠️ Kullanılan Teknolojiler
-
-| Teknoloji | Kullanım Alanı |
-|---|---|
-| Python | Uygulama geliştirme ve iş mantığı |
-| PyQt6 | Masaüstü kullanıcı arayüzü |
-| Pandas | Veri okuma, işleme ve filtreleme |
-| Scikit-learn | Makine öğrenmesi modeli |
-| Random Forest | Ürün ağacı tahmini |
-| LabelEncoder | Kategorik verilerin sayısal dönüşümü |
-| JSON | Kullanıcı, ayar ve yapılandırma verileri |
-| Excel | Üretim kayıtları ve veri yönetimi |
-| xlwings | Excel dosyalarıyla etkileşim |
-| PyInstaller | Uygulamanın `.exe` formatında paketlenmesi |
+- Motor ve bileşen kodlarının, açıklamalarının ve sıra numaralarının tutarlı şekilde oluşturulması,
+- Aynı özellikleri ifade eden farklı metinlerin doğru biçimde eşleştirilmesi,
+- Geçmiş kayıtların analiz edilerek uygun sıra numaralarının kullanıcıya önerilmesi,
+- Üretim kurallarının ve ölçü standartlarının merkezi olarak yönetilmesi,
+- Ortak ağ üzerinde Excel dosyalarına güvenilir veri aktarımı yapılması,
+- Motor ve alt bileşenlerden oluşan ürün ağaçlarının otomatik oluşturulması amaçlandı.
 
 ## ✨ Temel Özellikler
 
-### 1. Modüler Masaüstü Yönetim Paneli
+### 1. Akıllı Sıra Numarası Analizi
 
-PyQt6 ile geliştirilen uygulama, farklı motor ve parça türlerini yöneten 20 arayüz modülünden oluşur. Ortak işlemler mantık katmanında toplanırken parçaya özgü alanlar ve üretim kuralları ilgili modüllerde uygulanır.
+Projenin en önemli bileşenlerinden biri, geçmiş Excel kayıtlarında aynı özelliklere sahip parçalar için farklı sıra numaralarının kullanılmasından kaynaklanan tutarsızlıkları gidermeye yönelik geliştirdiğim eşleştirme sistemidir.
 
-### 2. Kullanıcı Yönetimi ve Yetkilendirme
+Örneğin aşağıdaki iki açıklama aynı özellikleri ifade edebilir:
 
-- Sistem Admini, Yetkili ve Standart olmak üzere üç kullanıcı rolü.
-- Kullanıcı rollerine göre menü ve işlem erişimlerinin sınırlandırılması.
-- Kullanıcı ve sistem ayarlarının yönetilmesi.
-- Kritik işlemlerin kayıt altına alınması.
+- `IMAK CEKDİRME delikSIZ`
+- `CEKDİRME DELİKSİZ IMAK`
 
-### 3. Motor DNA ve Üretim Kuralı Sistemi
+Geleneksel metin karşılaştırmasında kelimelerin sırası, büyük-küçük harf farklılıkları ve Türkçe karakterler eşleşmeyi etkileyebilir. Geliştirdiğim yaklaşımda ise metinler normalleştirilerek kelime sırasından bağımsız biçimde karşılaştırılır.
 
-Motorların gövde, kutup, verimlilik, güç ve opsiyonel özellikleri belirli kurallar doğrultusunda işlenerek standart açıklama metinleri oluşturulur.
+**Uygulanan yöntemler:**
+- Büyük-küçük harf farklılıklarının ortadan kaldırılması.
+- Türkçe karakter farklılıklarının eşleştirme mantığında normalize edilmesi.
+- Kelime sırasından bağımsız özellik karşılaştırması.
+- Aynı özellikleri taşıyan geçmiş kayıtların analiz edilmesi.
+- Eşleşen kayıtların sıra numaralarının ve kullanım bilgilerinin incelenmesi.
 
-- Otomatik açıklama ve kod oluşturma.
-- Özel güç ve devir girişleri için doğrulama kontrolleri.
-- Parçaya özgü mühendislik kuralları.
-- Hatalı veya yasaklı kombinasyonların engellenmesi.
-- Kayıtların Excel'e aktarılmadan önce tabloda kontrol edilmesi.
+Bu sayede açıklamaların yalnızca yazılış biçimi farklı olduğu için farklı parça kayıtları gibi değerlendirilmesi önlenerek sıra numarası tutarlılığının artırılması hedeflendi.
 
-### 4. Sıra Numarası Çakışma Analizi
+### 2. İstatistiksel Sıra Numarası Önerisi
 
-Geçmiş üretim kayıtlarında aynı özelliklere sahip parçalar için farklı sıra numaralarının kullanılması sorununa yönelik bir analiz mekanizması geliştirildi.
+Geçmiş üretim kayıtları analiz edilerek eşleşen parçalarda kullanılan sıra numaraları incelenir. Kullanıcıya mevcut kayıtlar ve kullanım istatistikleri üzerinden uygun sıra numarası seçenekleri sunulur.
 
-Sistem, parça özelliklerinden oluşturulan DNA metnini geçmiş kayıtlarla karşılaştırarak eşleşen kayıtları ve kullanılan sıra numaralarını belirler. Çakışma durumunda kullanıcıya mevcut numaraları inceleme, seçim yapma veya yetkili olarak manuel numara girme seçenekleri sunulur.
+- Geçmiş kayıtların karşılaştırılması.
+- Sıra numarası çakışmalarının tespit edilmesi.
+- Kullanım sıklıklarının incelenmesi.
+- Uygun sıra numarasının seçilebilmesi.
+- Yetkiye bağlı manuel sıra numarası girişi.
 
-### 5. Excel Veri Yönetimi ve Ağ Optimizasyonu
+Amaç, geçmiş kayıtlarla uyumlu seçimleri kolaylaştırmak ve aynı özellikteki parçalar için gereksiz sıra numarası farklılıklarını azaltmaktır.
 
-Ortak ağ üzerindeki Excel dosyalarıyla çalışırken oluşabilecek dosya erişim ve kilitlenme sorunlarını azaltmak amacıyla geçici dosya ve veri aktarım mekanizması geliştirildi.
+### 3. Modüler Motor ve Bileşen Yönetimi
 
-- Excel verilerinin okunması, filtrelenmesi ve güncellenmesi.
-- Toplu Excel aktarımı.
-- Kayıtlarla birlikte kullanıcı ve tarih-saat bilgilerinin tutulması.
-- Dosyaya erişilemediğinde kullanıcıya hata bildirimi gösterilmesi.
-- Geçici dosyalar üzerinden veri hazırlama ve ana dosyaya aktarma yaklaşımı.
+Uygulama, ana motor ve farklı motor bileşenlerinin yönetilebildiği modüler bir masaüstü mimarisine sahiptir.
 
-### 6. Yapay Zekâ Destekli Ürün Ağacı (BOM)
+Her bileşenin kendine özgü giriş alanları, doğrulama mekanizmaları ve üretim kuralları bulunur. Ortak işlemlerin yeniden kullanılabilir biçimde tasarlanması, yeni özelliklerin sisteme eklenmesini ve mevcut modüllerin bakımını kolaylaştırır.
 
-Projenin makine öğrenmesi bileşeninde geçmiş üretim reçeteleri kullanılarak bir Random Forest modeli eğitildi.
+- Motor ve bileşenlere ait kod ve açıklama oluşturma.
+- Parçaya özgü mühendislik kurallarını uygulama.
+- Geçersiz veya uyumsuz kombinasyonları kontrol etme.
+- Oluşturulan kayıtları tablolar üzerinden inceleme.
+- Birden fazla özellik üzerinden arama ve filtreleme.
+
+### 4. Gelişmiş Arama ve Otomatik Tamamlama
+
+Kullanıcıların çok sayıda özellik ve kayıt arasında daha hızlı işlem yapabilmesi için arama ve kelime tamamlama özellikleri geliştirildi.
+
+Örneğin, bir özellik alanına `ima` yazıldığında `IMAK` gibi eşleşen seçeneklerin hızlıca bulunabilmesi sağlandı.
+
+- Kısmi metinle arama.
+- Otomatik tamamlama.
+- Birden fazla kritere göre filtreleme.
+- Kayıt kodu ve açıklama üzerinden arama.
+- Kullanıcıların veri girişini hızlandıran arayüz kontrolleri.
+
+### 5. Merkezi Kural ve Ölçü Yönetimi
+
+Sistemin üretim standartlarının korunması için ölçü ve kural yönetimi mekanizmaları geliştirildi.
+
+Yetkili kullanıcılar, sahip oldukları izinler doğrultusunda yeni standart değerler ve kurallar tanımlayabilir. Uygunsuz seçimlerde uyarı mekanizmaları devreye girerek hatalı veri girişlerinin önüne geçilmesine yardımcı olur.
+
+Böylece her yeni standart için kaynak kodun değiştirilmesi ihtiyacı azaltılırken üretim kurallarının uygulama üzerinden yönetilmesi sağlandı.
+
+### 6. Ortak Ağ ve Excel Dosya Yönetimi
+
+Uygulamanın farklı bilgisayarlardan ortak Excel dosyalarıyla çalışabilmesi için dosya yolu yönetimi ve veri aktarım mekanizmaları geliştirildi.
+
+Kullanıcı, ayarlar üzerinden lokal bir dosyayı veya ağ üzerindeki hedef Excel dosyasını seçebilir.
+
+Dosyanın başka bir bilgisayarda açık olması nedeniyle oluşabilecek erişim sorunlarına karşı kayıt işlemlerinin yönetilmesine yönelik bir yapı kuruldu. Dosyaya yazma işlemi mümkün olmadığında aktarımın bekletilmesi ve dosya yeniden erişilebilir olduğunda güncellemenin gerçekleştirilmesi hedeflendi.
+
+- Dinamik Excel dosya yolu yönetimi.
+- Lokal ve ağ üzerindeki dosyalarla çalışma.
+- Geçici dosyalar üzerinden veri hazırlama ve aktarma.
+- Dosya erişim sorunlarında hata yönetimi.
+- Toplu veri aktarımı.
+- Kayıtların kullanıcı ve zaman bilgileriyle izlenmesi.
+
+### 7. Rol Tabanlı Kullanıcı Yönetimi ve Loglama
+
+Uygulamada kullanıcıların yetkilerine göre işlem yapabilmesini sağlayan bir yönetim sistemi geliştirildi.
+
+**Kullanıcı rolleri:**
+- **Sistem Admini:** Kullanıcı yönetimi, kritik ayarlar, log görüntüleme ve yetkili işlemleri.
+- **Yetkili:** İzin verilen kural ve ölçü yönetimi işlemleri ile ilgili kritik işlemler.
+- **Standart Kullanıcı:** Yetkisi dahilindeki veri giriş ve sorgulama işlemleri.
+
+Sistemde gerçekleştirilen önemli işlemler log mekanizmasıyla kayıt altına alınarak geriye dönük inceleme ve işlem takibi kolaylaştırıldı.
+
+### 8. Yapay Zekâ Destekli Ürün Ağacı (BOM)
+
+Projenin makine öğrenmesi modülünde geçmiş üretim reçetelerinden yararlanılarak yeni motorlara ait alt bileşenleri tahmin eden bir sistem geliştirildi.
 
 **Model geliştirme süreci:**
 
-1. Geçmiş üretim verileri derlendi ve model eğitimine uygun şekilde düzenlendi.
-2. Kategorik veriler `LabelEncoder` kullanılarak sayısal değerlere dönüştürüldü.
-3. Scikit-learn ile Random Forest modeli eğitildi.
-4. Eğitim sonucunda elde edilen model `.pkl` formatında uygulamaya entegre edildi.
-5. Kullanıcının girdiği motor tepekodu ve açıklamasından yararlanılarak 19 alt parçalık ürün ağacı tahmin edildi.
-6. Tahmin edilen parçalar tablo üzerinde gösterildi ve ilgili parça modüllerine aktarılabildi.
+1. Geçmiş üretim verileri derlendi ve eğitim için hazırlandı.
+2. Kategorik veriler `LabelEncoder` ile sayısal değerlere dönüştürüldü.
+3. Scikit-learn kullanılarak Random Forest modeli eğitildi.
+4. Eğitilen model `.pkl` formatında uygulamaya entegre edildi.
+5. Kullanıcının girdiği motor kodu ve özelliklerinden yararlanılarak 19 alt parçalık ürün ağacı tahmin edildi.
+6. Tahmin edilen bileşenler tablo üzerinde gösterilerek ilgili parça modüllerine aktarılabilir hale getirildi.
 
-**Model performansı:** Staj çalışmaları sırasında yapılan testlerde yaklaşık %75–80 doğruluk aralığı elde edildi. Bu değer, kullanılan veri seti ve gerçekleştirilen testlerle sınırlıdır; her motor türü için aynı performansın sağlanacağı anlamına gelmez. Özellikle geçmiş verilerde bulunmayan özel motorlarda tahmin sonuçlarının uzmanlar tarafından kontrol edilmesi gerekir.
+**Model performansı:** Geliştirme ve test sürecinde yaklaşık %75–80 doğruluk aralığı elde edildi. Bu sonuç kullanılan veri seti ve test koşullarıyla sınırlıdır. Özellikle eğitim verilerinde yeterince temsil edilmeyen motor türlerinde tahminlerin uzman kontrolünden geçirilmesi gerekir.
 
-### 7. Hata Ayıklama ve Dağıtım
+### 9. Ürün Ağacından Bileşen Kayıtlarına Otomatik Aktarım
 
-Geliştirme sürecinin sonunda modüller test edildi, tespit edilen hatalar giderildi ve uygulama PyInstaller kullanılarak çalıştırılabilir `.exe` formatında paketlendi. Son aşamada şirketin ortak ağında gerçek kullanım senaryoları üzerinden testler gerçekleştirildi.
+Ürün ağacı modülü, yalnızca tahmin sonuçlarını göstermekle kalmayıp bu sonuçların uygulamanın ilgili bileşen modüllerine aktarılmasını da destekler.
 
-## 🧠 Projede Kazanılan Deneyimler
+Motor kodu ve özelliklerine göre oluşturulan ürün ağacı üzerinden bileşen seviyeleri belirlenir; ilgili parçaların kod ve açıklama bilgilerinin oluşturulması ve Excel sayfalarına aktarılması sağlanır.
 
-- Modüler Python uygulaması tasarlama ve geliştirme.
-- PyQt6 ile masaüstü arayüzleri oluşturma.
-- Makine öğrenmesi için veri hazırlama ve kategorik veri dönüştürme.
-- Random Forest modeli eğitme ve uygulamaya entegre etme.
-- İş kuralları, veri doğrulama ve hata yönetimi geliştirme.
-- Excel tabanlı veri işleme ve ağ üzerinde dosya yönetimi.
-- Kullanıcı rolleri ve işlem kayıtları oluşturma.
-- Yazılımı paketleme, test etme ve gerçek kullanım ortamına hazırlama.
+Bu yaklaşım, aynı bilgilerin farklı ekranlara tekrar tekrar girilmesi ihtiyacını azaltarak veri tutarlılığını ve operasyonel verimliliği destekler.
 
-## 📂 Proje Deposu
+## 🛠️ Kullanılan Teknolojiler
 
-Kaynak kodlara ve proje dosyalarına GitHub deposu üzerinden ulaşabilirsiniz:
+| Teknoloji | Kullanım Amacı |
+|---|---|
+| Python | Uygulama geliştirme ve iş mantığı |
+| PyQt6 | Masaüstü kullanıcı arayüzü |
+| Pandas | Veri işleme, filtreleme ve analiz |
+| Scikit-learn | Makine öğrenmesi |
+| Random Forest | Ürün ağacı tahmini |
+| LabelEncoder | Kategorik verileri sayısal değerlere dönüştürme |
+| JSON | Kullanıcı ve yapılandırma verileri |
+| Excel | Üretim kayıtları ve veri yönetimi |
+| xlwings | Excel dosyalarıyla etkileşim |
+| PyInstaller | Çalıştırılabilir uygulama oluşturma |
 
-🔗 **[AEMOT Vertex Yönetim Paneli – GitHub](https://github.com/muhametaliaslanhan/Aemot_Vertex_Yonetim_Paneli)**
+## 🧠 Bu Projede Kazandığım Deneyimler
+
+- Gerçek üretim verilerindeki tutarsızlıkları analiz etme ve çözüm geliştirme.
+- Normalleştirme ve kelime sırasından bağımsız metin eşleştirme.
+- Modüler Python uygulaması geliştirme.
+- PyQt6 ile kullanıcı odaklı masaüstü arayüzleri oluşturma.
+- Makine öğrenmesi veri seti hazırlama ve model eğitimi.
+- Random Forest modelini mevcut bir yazılım sistemine entegre etme.
+- Excel tabanlı veri yönetimi ve ortak ağ üzerinde dosya erişim sorunlarını ele alma.
+- Rol tabanlı yetkilendirme ve işlem loglama.
+- Veri doğrulama, hata yönetimi, test ve uygulama paketleme.
+
+## 📌 Proje Bilgileri
+
+- **Proje:** AEMOT Vertex Yönetim Paneli
+- **Geliştirme Alanları:** Masaüstü Yazılım, Veri İşleme, Makine Öğrenmesi
+- **Programlama Dili:** Python
+- **Arayüz Teknolojisi:** PyQt6
+- **Makine Öğrenmesi:** Random Forest
+- **Staj Dönemi:** 06.07.2026 – 17.08.2026
+- **Çalışma Süresi:** 30 iş günü
+
+## 🔗 Kaynak Kod
+
+[AEMOT Vertex Yönetim Paneli – GitHub Deposu](https://github.com/muhametaliaslanhan/Aemot_Vertex_Yonetim_Paneli)
 
 ## ⚠️ Not
 
-Proje, şirketin üretim planlama süreçlerine yönelik geliştirilmiştir. Kurumsal veri gizliliğini korumak amacıyla örneklerde ve ekran görüntülerinde kullanılan veriler sınırlandırılabilir. Makine öğrenmesi modülü karar destek amacı taşır; tahmin edilen ürün ağaçlarının üretimde kullanılmadan önce kontrol edilmesi gerekir.
+Proje, gerçek üretim planlama ihtiyaçlarına yönelik geliştirilmiştir. Kurumsal veri gizliliği nedeniyle şirketin özel verileri ve üretim kayıtları herkese açık biçimde paylaşılmamalıdır. Makine öğrenmesi çıktıları karar destek amacı taşır ve üretim süreçlerinde kullanılmadan önce kontrol edilmelidir.
 
 ---
 
-**Geliştirici:** Muhammet Ali Aslanhan  
-**Staj Süresi:** 06.07.2026 – 17.08.2026  
-**Staj Süresi:** 30 iş günü  
-**Alanlar:** Python · Masaüstü Yazılım Geliştirme · Makine Öğrenmesi · Veri İşleme
+**Geliştiren:** Muhammet Ali Aslanhan
